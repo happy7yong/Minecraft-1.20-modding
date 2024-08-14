@@ -33,6 +33,8 @@ public class ModEventHandlers {
                 event.setCancellationResult(InteractionResult.SUCCESS);
                 event.setCanceled(true);
             }
+
+
         }
     }
 }
