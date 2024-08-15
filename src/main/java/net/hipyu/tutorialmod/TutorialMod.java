@@ -21,5 +21,11 @@ public class TutorialMod {
 
         // Register the event handler
         MinecraftForge.EVENT_BUS.register(ModEventHandlers.class);
+
+        // 클라이언트 전용 이벤트 핸들러 등록
+        modEventBus.addListener(ClientModEvents::init);
+
+        // Register command events
+        MinecraftForge.EVENT_BUS.register(ModCommands.class);
     }
 }
