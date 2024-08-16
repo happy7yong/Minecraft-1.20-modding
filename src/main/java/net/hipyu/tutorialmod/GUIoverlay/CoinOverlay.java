@@ -1,4 +1,4 @@
-package net.hipyu.tutorialmod;
+package net.hipyu.tutorialmod.GUIoverlay;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -22,8 +22,8 @@ public class CoinOverlay {
         String coinText = "Coins: " + coins;
 
         // 좌측 상단에 텍스트를 그리기
-        int x = 10;
-        int y = 10;
+        int x = 100;
+        int y = 100;
         int color = 0xFFFFFF; // 흰색
 
         RenderSystem.enableBlend();

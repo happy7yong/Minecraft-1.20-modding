@@ -1,5 +1,6 @@
-package net.hipyu.tutorialmod;
+package net.hipyu.tutorialmod.screenimage;
 
+import net.hipyu.tutorialmod.TutorialMod;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
