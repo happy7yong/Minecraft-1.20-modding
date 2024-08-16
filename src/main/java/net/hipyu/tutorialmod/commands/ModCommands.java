@@ -1,8 +1,10 @@
-package net.hipyu.tutorialmod;
+package net.hipyu.tutorialmod.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.hipyu.tutorialmod.GUIoverlay.CoinOverlay;
+import net.hipyu.tutorialmod.GUIoverlay.TimeOverlay;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
