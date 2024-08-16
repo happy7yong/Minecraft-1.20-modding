@@ -1,6 +1,6 @@
-package net.hipyu.tutorialmod;
+package net.hipyu.tutorialmod.GUIoverlay;
 
-import net.hipyu.tutorialmod.GUIoverlay.CoinOverlay;
+import net.hipyu.tutorialmod.TutorialMod;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
