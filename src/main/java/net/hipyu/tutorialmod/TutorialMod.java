@@ -1,6 +1,7 @@
 package net.hipyu.tutorialmod;
 
 import com.mojang.logging.LogUtils;
+import net.hipyu.tutorialmod.GUIoverlay.Customhotbar;
 import net.hipyu.tutorialmod.GUIoverlay.HealthGUI;
 import net.hipyu.tutorialmod.GUIoverlay.PlayerFaceGUI;
 import net.hipyu.tutorialmod.commands.ModCommands;
@@ -41,5 +42,6 @@ public class TutorialMod {
         // 클라이언트 측 초기화 코드
         MinecraftForge.EVENT_BUS.register(new HealthGUI());
         MinecraftForge.EVENT_BUS.register(PlayerFaceGUI.class);
+        MinecraftForge.EVENT_BUS.register(Customhotbar.class);
     }
 }
