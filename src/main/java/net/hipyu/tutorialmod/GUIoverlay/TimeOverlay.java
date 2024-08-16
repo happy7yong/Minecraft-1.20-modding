@@ -48,8 +48,8 @@ public class TimeOverlay {
             String timerText = String.format("%02d:%02d", minutes, seconds);
 
             // 오른쪽 상단에 텍스트를 그리기
-            int x = 100; // 오른쪽 끝에서 약간 떨어진 위치
-            int y = 50;
+            int x = 120; // 오른쪽 끝에서 약간 떨어진 위치
+            int y = 30;
             int color = 0xFFFFFF; // 흰색
 
             RenderSystem.enableBlend();

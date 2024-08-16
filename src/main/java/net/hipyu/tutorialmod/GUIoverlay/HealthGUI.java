@@ -31,7 +31,7 @@ public class HealthGUI {
 
         int x = 10; // 위치 설정
         int y = 10; // 위치 설정
-        int width = 100;
+        int width = 90;
         int height = 20;
 
         GuiGraphics guiGraphics = event.getGuiGraphics();
@@ -47,8 +47,8 @@ public class HealthGUI {
         int maxHunger = 20; // 최대 배고픔 포인트
 
         int x = 10; // 위치 설정
-        int y = 40; // 위치 설정 (체력 아래에 위치)
-        int width = 100;
+        int y = 33; // 위치 설정 (체력 아래에 위치)
+        int width = 90;
         int height = 20;
 
         GuiGraphics guiGraphics = event.getGuiGraphics();
