@@ -2,6 +2,7 @@ package net.hipyu.tutorialmod;
 
 import com.mojang.logging.LogUtils;
 import net.hipyu.tutorialmod.GUIoverlay.HealthGUI;
+import net.hipyu.tutorialmod.GUIoverlay.PlayerFaceGUI;
 import net.hipyu.tutorialmod.commands.ModCommands;
 import net.hipyu.tutorialmod.screenimage.ModEventHandlers;
 import net.minecraftforge.common.MinecraftForge;
@@ -20,30 +21,25 @@ public class TutorialMod {
     public TutorialMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        // Register ourselves for server and other game events we are interested in
+        // 서버 및 클라이언트 공통 이벤트 핸들러 등록
         MinecraftForge.EVENT_BUS.register(this);
-
-        // Register the event handler
         MinecraftForge.EVENT_BUS.register(ModEventHandlers.class);
 
         // 클라이언트 전용 이벤트 핸들러 등록
-        modEventBus.addListener(ClientModEvents::init);
+        modEventBus.addListener(this::doClientStuff);
+        modEventBus.addListener(this::setup);
 
-        // Register command events
+        // 서버 및 클라이언트 공통 이벤트 핸들러 등록
         MinecraftForge.EVENT_BUS.register(ModCommands.class);
-
-        // 이벤트 버스에 리스너 등록
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.addListener(this::setup);
-        bus.addListener(this::doClientStuff);
     }
+
     private void setup(final FMLCommonSetupEvent event) {
         // 서버 측 초기화 코드 (필요시)
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         // 클라이언트 측 초기화 코드
-        // 여기에서 이벤트 리스너 등록
         MinecraftForge.EVENT_BUS.register(new HealthGUI());
+        MinecraftForge.EVENT_BUS.register(PlayerFaceGUI.class);
     }
 }
