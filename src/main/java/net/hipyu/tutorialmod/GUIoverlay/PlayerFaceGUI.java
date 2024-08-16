@@ -42,9 +42,9 @@ public class PlayerFaceGUI {
         int screenWidth = mc.getWindow().getGuiScaledWidth();
 
         // 플레이어 얼굴의 위치 및 크기 설정
-        int x = screenWidth - 50; // 오른쪽 끝에서 약간 떨어진 위치 (50 픽셀)
+        int x = screenWidth - 50; // 오른쪽 끝에서 약간 떨어진 위치 (더 넓은 위치 확보)
         int y = 10; // Y 위치
-        int size = 32; // 얼굴 크기 (32x32)
+        int size = 40; // 얼굴 크기 (더 크게 설정)
 
         // 스킨 텍스처를 설정하고 블렌드 모드 활성화
         RenderSystem.setShaderTexture(0, skin);
@@ -52,7 +52,8 @@ public class PlayerFaceGUI {
         RenderSystem.defaultBlendFunc(); // 기본 블렌드 함수
 
         // 얼굴을 화면에 렌더링
-        guiGraphics.blit(skin, x, y, 8, 8, size, size, 64, 64); // 스킨의 얼굴 부분을 8, 8에서 크기 32x32로 잘라서 표시
+        // (텍스처, x 위치, y 위치, 스크린에 렌더링될 너비, 높이, 텍스처에서 자를 시작 x, 자를 시작 y, 자를 너비, 자를 높이, 텍스처 전체 너비, 텍스처 전체 높이)
+        guiGraphics.blit(skin, x, y, size, size, 8, 8, 8, 8, 64, 64); // 스킨의 얼굴 부분만 잘라서 더 크게 표시
 
         // 블렌드 모드 비활성화
         RenderSystem.disableBlend();
