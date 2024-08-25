@@ -31,7 +31,7 @@ public class ModEventHandlers {
                 player.sendSystemMessage(Component.literal("g키를 누르셨습니다"));
 
                 // 이미지 띄우는 GUI 호출
-                Minecraft.getInstance().setScreen(new CustomImageScreen());
+                Minecraft.getInstance().setScreen(new RuleImageScreen());
             }
         }
     }
