@@ -6,6 +6,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.event.InputEvent;
@@ -60,5 +61,25 @@ public class ModEventHandlers {
 
         }
 
+    }
+
+    //아이템 우클릭 이벤트
+    @SubscribeEvent
+    public static void onItemRightClick(PlayerInteractEvent.RightClickItem event) {
+        // 클라이언트 사이드에서만 처리
+        if (event.getLevel().isClientSide()) {
+            // 플레이어가 우클릭한 아이템이 책인지 확인
+            if (event.getItemStack().getItem() == Items.NETHER_STAR) {
+                // 메시지를 띄우는 코드 (선택 사항)
+                Minecraft.getInstance().player.sendSystemMessage(Component.literal("You right-clicked with a Book!"));
+
+                // RuleImageScreen GUI 호출
+                Minecraft.getInstance().setScreen(new RuleImageScreen());
+
+                // 이벤트가 처리되었음을 알리기 위해 InteractionResult를 반환
+                event.setCancellationResult(InteractionResult.SUCCESS);
+                event.setCanceled(true);
+            }
+        }
     }
 }
