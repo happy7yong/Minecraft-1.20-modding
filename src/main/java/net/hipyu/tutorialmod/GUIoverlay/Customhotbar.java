@@ -7,22 +7,31 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGuiEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT)
 public class Customhotbar {
 
     @SubscribeEvent
-    public static void onRenderGuiOverlay(RenderGuiEvent.Post event) {
+    public static void onRenderGuiOverlay(RenderGuiOverlayEvent.Pre event) {
+        if (event.getOverlay() == VanillaGuiOverlay.HOTBAR.type() ||
+                event.getOverlay() == VanillaGuiOverlay.EXPERIENCE_BAR.type()) {
+            event.setCanceled(true); // 기본 핫바와 경험치 바 렌더링 취소
+        }
+    }
+
+    @SubscribeEvent
+    public static void onRenderGuiOverlay(RenderGuiOverlayEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
 
         if (player != null) {
             renderCustomHotbar(event.getGuiGraphics(), player, mc);
-//            event.setCanceled();  // 기본 핫바 렌더링 취소
         }
+
     }
 
     private static void renderCustomHotbar(GuiGraphics guiGraphics, Player player, Minecraft mc) {
@@ -31,6 +40,8 @@ public class Customhotbar {
         int hotbarX = 10; // 핫바의 X 위치 (왼쪽에 고정)
         int hotbarY = screenHeight / 2 - 91; // 핫바의 Y 시작 위치 (화면 중앙에 고정)
 
+        int selectedSlot = player.getInventory().selected; // 현재 선택된 슬롯 인덱스 가져오기
+
         // 핫바 배경 그리기 (세로로 배치하므로 별도의 배경 그리기 생략 가능)
         RenderSystem.setShaderTexture(0, InventoryScreen.BACKGROUND_LOCATION);
 
@@ -38,10 +49,14 @@ public class Customhotbar {
         for (int i = 0; i < 9; ++i) {
             int slotX = hotbarX; // X 위치는 고정
             int slotY = hotbarY + i * 20; // Y 위치는 슬롯 간 간격을 두고 세로로 정렬
-            renderHotbarSlot(guiGraphics, slotX, slotY, player.getInventory().items.get(i), mc);
 
-            // 슬롯 배경 색상 설정 (ARGB 포맷: 0xAARRGGBB)
-            guiGraphics.fill(slotX, slotY, slotX + 18, slotY + 18, 0x800000FF); // 반투명 파란색 배경
+            if (i == selectedSlot) {
+                // 선택된 슬롯을 강조하기 위해 배경 색상을 변경
+                guiGraphics.fill(slotX, slotY, slotX + 18, slotY + 18, 0x80FF0000); // 반투명 빨간색 배경
+            } else {
+                // 일반 슬롯 배경 색상
+                guiGraphics.fill(slotX, slotY, slotX + 18, slotY + 18, 0x80FFFFFF); // 반투명 파란색 배경
+            }
 
             // 슬롯에 아이템 렌더링
             renderHotbarSlot(guiGraphics, slotX, slotY, player.getInventory().items.get(i), mc);
