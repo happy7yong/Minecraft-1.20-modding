@@ -22,7 +22,8 @@ public class CoinOverlay {
         String coinText = "Coins: " + coins;
 
         // 좌측 상단에 텍스트를 그리기
-        int x = 160;
+
+        int x = 10;
         int y = 10;
         int color = 0xFFFFFF; // 흰색
 

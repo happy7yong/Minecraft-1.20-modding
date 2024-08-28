@@ -40,10 +40,14 @@ public class PlayerFaceGUI {
 
         // 화면 너비 가져오기
         int screenWidth = mc.getWindow().getGuiScaledWidth();
+        int screenHeight = mc.getWindow().getGuiScaledHeight();
+
+        int sizes = 40; // 얼굴 크기 (픽셀 단위)
+
 
         // 플레이어 얼굴의 위치 및 크기 설정
-        int x = screenWidth - 50; // 오른쪽 끝에서 약간 떨어진 위치 (더 넓은 위치 확보)
-        int y = 10; // Y 위치
+        int x = (screenWidth - sizes) / 2; // 화면 중앙에서 왼쪽으로 이동
+        int y = (screenHeight - sizes) / 2 - (sizes / 2) + (sizes + 30); // 화면 중앙에서 위로 이동
         int size = 40; // 얼굴 크기 (더 크게 설정)
 
         // 스킨 텍스처를 설정하고 블렌드 모드 활성화

@@ -39,16 +39,21 @@ public class HealthGUI {
         int health = (int) player.getHealth();
         int maxHealth = (int) player.getMaxHealth();
 
-        int x = 50; // 위치 설정
-        int y = 10; // 위치 설정
+        int screenWidth = mc.getWindow().getGuiScaledWidth();
+        int screenHeight = mc.getWindow().getGuiScaledHeight();
+
         int width = 90;
         int height = 20;
+        int x = (int) (screenWidth * 0.2); // 화면 왼쪽에서 5% 떨어진 위치
+        int y = screenHeight - height - (int) (screenHeight * 0.2); // 화면 아래쪽에서 5% 떨어진 위치
+
+
 
         GuiGraphics guiGraphics = event.getGuiGraphics();
         guiGraphics.fill(x, y, x + width, y + height, 0x80000000); // 배경
         guiGraphics.fill(x, y, x + (width * health / maxHealth), y + height, 0xFFFF0000); // 체력 바
 
-        String healthText = "Health: " + health + "/" + maxHealth;
+        String healthText = "체력 | " + health + "/" + maxHealth;
         guiGraphics.drawString(mc.font, healthText, x + 5, y + 5, 0xFFFFFFFF); // 체력 텍스트
     }
 
@@ -56,16 +61,21 @@ public class HealthGUI {
         int hunger = player.getFoodData().getFoodLevel();
         int maxHunger = 20; // 최대 배고픔 포인트
 
-        int x = 50; // 위치 설정
-        int y = 33; // 위치 설정 (체력 아래에 위치)
+        int screenWidth = mc.getWindow().getGuiScaledWidth();
+        int screenHeight = mc.getWindow().getGuiScaledHeight();
+
         int width = 90;
         int height = 20;
+        int x = screenWidth - width - (int) (screenWidth * 0.2); // 화면 오른쪽에서 5% 떨어진 위치
+        int y = screenHeight - height - (int) (screenHeight * 0.2); // 화면 아래쪽에서 5% 떨어진 위치
+
+
 
         GuiGraphics guiGraphics = event.getGuiGraphics();
         guiGraphics.fill(x, y, x + width, y + height, 0x80000000); // 배경
         guiGraphics.fill(x, y, x + (width * hunger / maxHunger), y + height, 0xFFDEB887); // 배고픔 바
 
-        String hungerText = "Hunger: " + hunger + "/" + maxHunger;
+        String hungerText = "배고픔 | " + hunger + "/" + maxHunger;
         guiGraphics.drawString(mc.font, hungerText, x + 5, y + 5, 0xFFFFFFFF); // 배고픔 텍스트
     }
 }
