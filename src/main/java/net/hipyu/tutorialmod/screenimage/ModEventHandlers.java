@@ -71,7 +71,7 @@ public class ModEventHandlers {
             // 플레이어가 우클릭한 아이템이 책인지 확인
             if (event.getItemStack().getItem() == Items.NETHER_STAR) {
                 // 메시지를 띄우는 코드 (선택 사항)
-                Minecraft.getInstance().player.sendSystemMessage(Component.literal("You right-clicked with a Book!"));
+                Minecraft.getInstance().player.sendSystemMessage(Component.literal("§l안녕안녕안녕하십니까?"));
 
                 // RuleImageScreen GUI 호출
                 Minecraft.getInstance().setScreen(new RuleImageScreen());
