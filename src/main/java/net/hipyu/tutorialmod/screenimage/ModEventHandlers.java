@@ -22,9 +22,12 @@ public class ModEventHandlers {
 
     private static final long DOUBLE_CLICK_TIME_LIMIT = 300; // 밀리초 단위
     private static long lastSpacebarClickTime = 0;
+    private static boolean canDoubleSpace = true; // 더블 스페이스바 사용 가능 여부
+    private static boolean hasUsedDoubleSpace = false; // 더블 스페이스바 사용 여부 추적
+
     //G키 누르면 이미지 발생
     @SubscribeEvent
-    public static void onKeyPress(InputEvent.@NotNull Key event) {
+    public static void onKeyPress(InputEvent.Key event) {
         // G 키가 눌렸는지 확인
         if (event.getKey() == GLFW.GLFW_KEY_G && event.getAction() == GLFW.GLFW_PRESS) {
             Minecraft mc = Minecraft.getInstance();
@@ -46,17 +49,40 @@ public class ModEventHandlers {
                 Minecraft.getInstance().setScreen(new RuleImageScreen());
             }
         }
-        // 스페이스바 두 번 클릭 감지
+
+        // 스페이스바 더블클릭 체크
         if (event.getKey() == GLFW.GLFW_KEY_SPACE && event.getAction() == GLFW.GLFW_PRESS) {
-            long currentTime = System.currentTimeMillis();
+            Minecraft mc = Minecraft.getInstance();
+            LocalPlayer player = mc.player;
 
-            if (currentTime - lastSpacebarClickTime <= DOUBLE_CLICK_TIME_LIMIT) {
-                // 두 번째 스페이스바 클릭 감지
-                sendChatMessage();
+            if (player != null) {
+                long currentTime = System.currentTimeMillis();
+
+                if (currentTime - lastSpacebarClickTime <= DOUBLE_CLICK_TIME_LIMIT) {
+                    // 두 번째 스페이스바 클릭 감지
+                    if (canDoubleSpace && !hasUsedDoubleSpace) {
+                        sendChatMessage();
+                        hasUsedDoubleSpace = true; // 더블 스페이스바 사용 기록
+                        canDoubleSpace = false; // 더블 스페이스바 사용 불가로 설정
+                    }
+                } else {
+                    // 클릭 간격이 너무 길면 초기화
+                    hasUsedDoubleSpace = false;
+                }
+
+                // 현재 클릭 시간을 기록
+                lastSpacebarClickTime = currentTime;
             }
-
-            // 현재 클릭 시간을 기록
-            lastSpacebarClickTime = currentTime;
+        }
+    }
+    // 플레이어가 지면에 닿을 때 더블 스페이스바 다시 활성화
+    @SubscribeEvent
+    public static void onPlayerTick(net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent event) {
+        if (event.getEntity() instanceof LocalPlayer player) {
+            // 플레이어의 Y축 속도가 거의 0이면 땅에 닿았다고 판단
+            if (player != null && player.fallDistance == 0.0f) {
+                canDoubleSpace = true; // 플레이어가 땅에 닿으면 다시 더블 스페이스바 기능 활성화
+            }
         }
     }
 
@@ -66,10 +92,9 @@ public class ModEventHandlers {
 
         if (player != null) {
             // 채팅 메시지 전송
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("dd"));
+            Minecraft.getInstance().player.connection.sendCommand("/더블점프");
         }
     }
-
 
 
     //자작나무 우클릭시 이미지 발생
